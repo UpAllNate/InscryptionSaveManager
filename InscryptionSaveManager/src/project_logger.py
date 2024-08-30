@@ -1,7 +1,4 @@
-try:
-    from termcolor_files import color_text, Color, Attribute
-except:
-    from src.termcolor_files import color_text, Color, Attribute
+from termcolor_files import color_text, Color, Attribute
 import logging
 from logging.handlers import RotatingFileHandler
 from logging import DEBUG, INFO, WARNING, ERROR, CRITICAL, NOTSET
@@ -78,6 +75,7 @@ class CleanFormatter(logging.Formatter):
 standard_file_format_string = '[%(asctime)s] [%(levelname)s] [%(name)s {%(module)s:%(lineno)d}] %(message)s'
 standard_stream_format_string = '%(levelname)s %(asctime)s: %(message)s'
 
+message_only_format_string = '%(message)s'
 
 class ProjectLogger:
 
