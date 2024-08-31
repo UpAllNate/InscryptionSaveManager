@@ -53,10 +53,6 @@ while True:
 
         cards = parse_save_file(save_file_path, meta_logger)
 
-        # logger.log(level= INFO, message= f"{'#' * 20} Cards parsed:")
-        # for card in cards:
-        #     logger.log(INFO, message= str(card))
-
         write_necessary = challenge_card_randomizer(cards, ui_logger)
         handle_save_write(cards, save_file_path, write_necessary, meta_logger)
 

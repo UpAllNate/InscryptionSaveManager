@@ -94,22 +94,22 @@ def challenge_card_randomizer(cards : list[Card], logger : ProjectLogger) -> boo
         # Blood card or no cost
         if card.blood_cost > 0 or card.blood_cost == 0 and card.bone_cost == 0:
 
-            if random() > 0.97:
+            if random() > 0.99:
                 new_blood_cost += 1
                 logger.log(level= INFO, message= f"Card {new_card.base_stats.display_name} blood cost {color_text('increased', color= Color.RED)} by 1 to {new_blood_cost}")
             
-            if random() > 0.97:
+            if random() > 0.99:
                 new_blood_cost -= 1
                 logger.log(level= INFO, message= f"Card {new_card.base_stats.display_name} blood cost {color_text('decreased', color= Color.GREEN)} by 1 to {new_blood_cost}")
         
         # Bone card
         else:
 
-            if random() > 0.97:
+            if random() > 0.99:
                 new_bone_cost += 1
                 logger.log(level= INFO, message= f"Card {new_card.base_stats.display_name} bone cost {color_text('increased', color= Color.RED)} by 1 to {new_bone_cost}")
             
-            if random() > 0.97:
+            if random() > 0.99:
                 new_bone_cost -= 1
                 logger.log(level= INFO, message= f"Card {new_card.base_stats.display_name} bone cost {color_text('decreased', color= Color.GREEN)} by 1 to {new_bone_cost}")
 
