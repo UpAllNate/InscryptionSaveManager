@@ -10,6 +10,7 @@ from project_logger import (
 )
 from card_classes import Card, CardModConfig
 from card_attribute_enums import Ability, Decal
+from creatures import Creature
 
 FS = "    " # Four Spaces
 
@@ -53,7 +54,7 @@ def parse_mod_text(mod_text_lines : list[str], cards : list[Card], logger : Proj
             logger.log(level= LOW_DEBUG, message= f'Parsed card name {card_name} and card duplicate number {card_dupe_num}')
 
             for i in range(0, card_dupe_num + 1):
-                temp_cards_list = [c.name for c in cards[vol_card_index+ 1:]]
+                temp_cards_list = [c.creature.value for c in cards[vol_card_index+ 1:]]
                 vol_card_index = temp_cards_list.index(card_name)
                 card_index += vol_card_index
                 if i > 0:
@@ -290,7 +291,9 @@ def parse_save_file(save_file_path : str, logger : ProjectLogger) -> list[Card]:
 
                     case SaveParsingState.CARD_IDS:
                         if line.startswith(' ' * 24):
-                            cards.append(Card(name = parse_text_between_substrings(line_stripped, '"', '"', logger= logger))) # Text between quotes               
+                            creature_name = parse_text_between_substrings(line_stripped, '"', '"', logger= logger)
+                            creature = Creature(creature_name)
+                            cards.append(Card(creature))         
                 
                     case SaveParsingState.COLLECTING_MOD_BLOCK:
                         capture_mod_lines.append(line)

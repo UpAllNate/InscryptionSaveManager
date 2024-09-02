@@ -16,9 +16,9 @@ from project_logger import (
 )
 
 meta_logger = ProjectLogger(
-    file_logger_name= __file__ + "meta_file", file_log_level= LOW_DEBUG, file_log_format_string= standard_file_format_string,
+    file_logger_name= __file__ + "meta_file", file_log_level= DEBUG, file_log_format_string= standard_file_format_string,
     file_filename= __file__ + "_meta.log", file_max_size= 10 * 1024 * 1024, file_backup_count= 0,
-    stream_logger_name= __file__ + "meta_stream", stream_log_level= ERROR, stream_log_format_string= standard_stream_format_string
+    stream_logger_name= __file__ + "meta_stream", stream_log_level= WARNING, stream_log_format_string= standard_stream_format_string
 )
 
 ui_logger = ProjectLogger(
@@ -37,21 +37,37 @@ from save_monitoring_methods import save_file_changed
 from save_parse_methods import parse_save_file
 from save_write_methods import handle_save_write
 
-from challenges import ChallengeManager, Challenge_Sigil_Adder
+from card_attribute_enums import Tribe
+
+from challenges import (
+    ChallengeManager,
+    Challenge_Sigil_Adder,
+    Challenge_BeeSwarm,
+    Challenge_EnforceTribe
+)
 
 with open('filepath.txt', 'r') as f:
     for line in f:
         if "inscryption" in line.lower():
             save_file_path = line.strip()
 
+challenges = [
+    
+]
+
 challenge_manager = ChallengeManager(
     challenges= [
-        Challenge_Sigil_Adder(
+        Challenge_EnforceTribe(
+            tribe= Tribe.REPTILE,
             meta_logger= meta_logger,
             ui_logger= ui_logger
         )
     ]
 )
+
+clear_term()
+cards = parse_save_file(save_file_path, meta_logger)
+challenge_manager.run(cards)
 
 while True:
 
@@ -62,7 +78,8 @@ while True:
         cards = parse_save_file(save_file_path, meta_logger)
 
         write_necessary = challenge_manager.run(cards)
+        meta_logger.log(level= INFO, message= f"Write necessary: {write_necessary}")
         # write_necessary = True
-        handle_save_write(cards, 'SaveFile.gwsave', write_necessary, meta_logger)
+        handle_save_write(cards, save_file_path, write_necessary, meta_logger)
 
     time.sleep(1)

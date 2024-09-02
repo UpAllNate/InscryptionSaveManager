@@ -1,6 +1,7 @@
 from random import choice, randint, random
 from card_classes import Card, CardModConfig
 from card_collection import (
+    pelt_cards,
     standard_cards,
     rare_standard_cards,
     not_rare_standard_cards,
@@ -14,7 +15,7 @@ from card_collection import (
     no_cost_rare_standard_cards,
     no_cost_not_rare_standard_cards
 )
-from creatures import Creatures, base_stat_dict
+from creatures import Creature, base_stat_dict
 from card_attribute_enums import Ability, Tribe, Decal
 from project_logger import (
     ProjectLogger,
@@ -45,11 +46,14 @@ def clamp(input, low, high):
 def prompt_for_data(prompt : str, logger : ProjectLogger, required_type = None, valid_responses : list = None) -> Any:
 
     while True:
-        raw = input(prompt).strip().lower()
+        actual_prompt = prompt
+        if valid_responses:
+            actual_prompt += f"\n[Options] {valid_responses}\n"
+        raw = input(actual_prompt).strip().lower()
 
         if required_type is not None:
             try:
-                parsed_raw = required_type()
+                parsed_raw = required_type(raw)
             except TypeError:
                 print()
                 logger.log(level= WARNING, message= f"Warning: {raw.strip()} is invalid type.")
@@ -75,10 +79,11 @@ class Challenge:
         self.initialized = False
     
     def startup_query(self) -> None:
-        pass
+        self.initialized = True
 
     def run(self, cards: list[Card]) -> bool:
-        pass
+        if not self.initialized:
+            self.startup_query()
 
 class ChallengeManager:
 
@@ -109,6 +114,164 @@ class Challenge_Sigil_Adder(Challenge):
             card.add_mod_config(new_mod)
         
         return True
+    
+class Challenge_BeeSwarm(Challenge):
+
+    def __init__(self, meta_logger: ProjectLogger, ui_logger: ProjectLogger) -> None:
+        super().__init__(meta_logger, ui_logger)
+
+    def startup_query(self) -> None:
+        return super().startup_query()
+    
+    def run(self, cards: list[Card]) -> bool:
+        super().run(cards)
+
+        cards.append(Card(Creature.BEEHIVE))
+        
+        return True
+
+tribe_prompt_dict = {
+    "avian" : Tribe.AVIAN,
+    "reptile" : Tribe.REPTILE,
+    "insect" : Tribe.INSECT,
+    "avian" : Tribe.AVIAN,
+    "canine" : Tribe.CANINE,
+    "hooved" : Tribe.HOOVED
+}
+
+class Challenge_EnforceTribe(Challenge):
+
+    def __init__(self, tribe: Tribe, meta_logger: ProjectLogger, ui_logger: ProjectLogger) -> None:
+        super().__init__(meta_logger, ui_logger)
+
+    def startup_query(self) -> None:
+        super().startup_query()
+
+        clear_term()
+
+        self.maintain_rarity : bool = prompt_for_data(
+            prompt= "[Enforce Tribe] Would you like rare cards to remain rares and standard cards remain standard?",
+            logger= self.meta_logger,
+            required_type= str,
+            valid_responses= ['yes', 'no']
+        )
+
+        tribe_key = prompt_for_data(
+            prompt= "[Enforce Tribe] Would you like rare cards to remain rares and standard cards remain standard?",
+            logger= self.meta_logger,
+            required_type= str,
+            valid_responses= list(tribe_prompt_dict.keys())
+        )
+
+        self.maintain_sigil_count : bool = prompt_for_data(
+            prompt= "[Enforce Tribe] Would you like to maintain that any replaced card's sigil count remain the same?",
+            logger= self.meta_logger,
+            required_type= str,
+            valid_responses= ['yes', 'no']
+        )
+
+        self.tribe = tribe_prompt_dict[tribe_key]
+    
+    def card_is_of_tribe(self, card: Card) -> bool:
+
+        if self.tribe not in card.base_stats.tribes and card.creature not in [creature for creature in pelt_cards]:
+            return False
+        
+        return True
+
+    def new_card_is_good(self, original_card : Card, new_card : Card) -> bool:       
+
+        if self.tribe not in new_card.base_stats.tribes:
+            return False
+        
+        if self.maintain_rarity:
+            if original_card.base_stats.rare != new_card.base_stats.rare:
+                return False
+
+        if self.maintain_sigil_count:
+            if len(original_card.abilities) < len(new_card.abilities):
+                return False
+        
+        return True
+
+    def run(self, cards: list[Card]) -> bool:
+        super().run(cards)
+
+        any_wrong_tribe = False
+        for i, card in enumerate(cards):
+            
+            # Replace card if it isn't a part of this challenge's tribe
+            if not self.card_is_of_tribe(card):
+
+                self.meta_logger.log(level= INFO, message= f"[Enforce Tribe] Card {card.base_stats.display_name} is not a member of the tribe {self.tribe.name}.")
+                any_wrong_tribe = True
+
+                new_card = Card(card.creature)
+
+                # Until the card is adequate
+                while not self.new_card_is_good(original_card= card, new_card= new_card):
+
+                    if self.maintain_rarity:
+                        if card.base_stats.rare:
+                            if self.maintain_sigil_count:
+                                creature_pool = [
+                                    creature for creature in rare_standard_cards if (
+                                        self.tribe in base_stat_dict[creature].tribes
+                                        and len(base_stat_dict[creature].abilities) == len(card.abilities)
+                                    )
+                                ]
+
+                                if creature_pool:
+                                    new_creature = choice(creature_pool)
+                                else:
+                                    creature_pool = [
+                                        creature for creature in rare_standard_cards if (
+                                            self.tribe in base_stat_dict[creature].tribes
+                                            and len(base_stat_dict[creature].abilities) < len(card.abilities)
+                                        )
+                                    ]
+                                    new_creature = choice(creature_pool)
+                            else:
+                                new_creature = choice(rare_standard_cards)
+                        else:
+                            if self.maintain_sigil_count:
+                                creature_pool = [
+                                    creature for creature in not_rare_standard_cards if (
+                                        self.tribe in base_stat_dict[creature].tribes
+                                        and len(base_stat_dict[creature].abilities) == len(card.abilities)
+                                    )
+                                ]
+
+                                if creature_pool:
+                                    new_creature = choice(creature_pool)
+                                else:
+                                    creature_pool = [
+                                        creature for creature in not_rare_standard_cards if (
+                                            self.tribe in base_stat_dict[creature].tribes
+                                            and len(base_stat_dict[creature].abilities) < len(card.abilities)
+                                        )
+                                    ]
+                                    new_creature = choice(creature_pool)
+                            else:
+                                new_creature = choice(not_rare_standard_cards)
+                    
+                    else:
+                        new_creature = choice(standard_cards)
+
+                    new_card = Card(new_creature)
+
+                    needed_sigil_count = len(card.abilities) - len(new_card.abilities)
+                    if self.maintain_sigil_count and needed_sigil_count > 0 :
+                        new_mod = CardModConfig()
+                        for _ in range(needed_sigil_count):
+                            new_mod.abilities.append(choice(list(Ability)))
+                        new_card.add_mod_config(new_mod)
+
+                cards[i] = new_card
+                self.meta_logger.log(level= INFO, message= f"[Enforce Tribe] Replacing card {card.base_stats.display_name} with {new_card}.")
+                self.ui_logger.log(level= INFO, message= f"[Enforce Tribe] Card {card.base_stats.display_name} replaced with {new_card}.")
+
+        return any_wrong_tribe
 
 class Challenge_Deck_Randomizer(Challenge):
 
@@ -117,29 +280,29 @@ class Challenge_Deck_Randomizer(Challenge):
     
     def startup_query(self) -> None:
 
-        self.isolate_rares : bool = prompt_for_data(
-            prompt= "Would you like rare cards to remain rares and standard cards remain standard? (yes or no): ",
+        self.maintain_rarity : bool = prompt_for_data(
+            prompt= "Would you like rare cards to remain rares and standard cards remain standard?",
             logger= self.meta_logger,
             required_type= str,
             valid_responses= ['yes', 'no']
         )
 
         self.maintain_sigil_count : bool = prompt_for_data(
-            prompt= "Would you like to maintain that each card's sigil count remain the same? (yes or no): ",
+            prompt= "Would you like to maintain that each card's sigil count remain the same?",
             logger= self.meta_logger,
             required_type= str,
             valid_responses= ['yes', 'no']
         )
 
         self.maintain_stats : bool = prompt_for_data(
-            prompt= "Would you like to maintain each card's total attack / health stat sum? (yes or no): ",
+            prompt= "Would you like to maintain each card's total attack / health stat sum?",
             logger= self.meta_logger,
             required_type= str,
             valid_responses= ['yes', 'no']
         )
 
         self.maintain_stats_exactly : bool = prompt_for_data(
-            prompt= "Would you like to maintain each card's total attack / health stat sum? (yes or no): ",
+            prompt= "Would you like to maintain each card's total attack / health stat sum?",
             logger= self.meta_logger,
             required_type= str,
             valid_responses= ['yes', 'no']
@@ -147,7 +310,7 @@ class Challenge_Deck_Randomizer(Challenge):
 
         if not self.maintain_buffs:
             self.maintain_buffs : bool = prompt_for_data(
-                prompt= "Would you like to maintain each card's buffs / debuffs? (yes or no): ",
+                prompt= "Would you like to maintain each card's buffs / debuffs?",
                 logger= self.meta_logger,
                 required_type= str,
                 valid_responses= ['yes', 'no']
@@ -159,7 +322,7 @@ class Challenge_Deck_Randomizer(Challenge):
 
     def generate_random_replacement_card(self, card : Card) -> Card:
 
-        if self.isolate_rares:
+        if self.maintain_rarity:
             if card.base_stats.rare:
                 if card.base_stats.rare:
                     new_creature = choice(rare_standard_cards).value

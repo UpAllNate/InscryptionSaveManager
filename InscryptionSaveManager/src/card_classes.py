@@ -6,7 +6,7 @@ from card_attribute_enums import (
     Decal
 )
 from project_logger import color_text, Color
-from creatures import Creatures, BaseStats, base_stat_dict
+from creatures import Creature, BaseStats, base_stat_dict
 from card_attribute_enums import Ability, Tribe
 
 @dataclass
@@ -52,9 +52,8 @@ class CardModConfig:
 
 class Card:
 
-    def __init__(self, name : str) -> None:
-        self.name = name
-        self.creature = Creatures(name)
+    def __init__(self, creature : Creature) -> None:
+        self.creature = creature
         self.base_stats : BaseStats = base_stat_dict[self.creature]
         self.attack = self.base_stats.attack
         self.health = self.base_stats.health

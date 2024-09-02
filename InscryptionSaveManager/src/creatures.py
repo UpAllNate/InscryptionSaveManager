@@ -19,7 +19,7 @@ class BaseStats:
     def __str__(self) -> str:
         return f"[{self.display_name}] A: {self.attack} H: {self.health} Rare: {self.rare} Tribes: {self.tribes} Abilities: {self.abilities}"
 
-class Creatures(Enum):
+class Creature(Enum):
 
     AMOEBA = "Amoeba"
     STATIC_GLITCH = "!STATIC!GLITCH"
@@ -131,7 +131,7 @@ class Creatures(Enum):
 
 
 base_stat_dict = {
-    Creatures.HYDRA : BaseStats(
+    Creature.HYDRA : BaseStats(
         display_name= "Hydra",
         attack= 1,
         health= 5,
@@ -140,7 +140,7 @@ base_stat_dict = {
         tribes= [t for t in Tribe if t is not Tribe.SQUIRREL],
         abilities= [Ability.BIFURCATED, Ability.TRIFURCATED]
     ),
-    Creatures.IJIRAQ : BaseStats(
+    Creature.IJIRAQ : BaseStats(
         display_name= "Ijiraq",
         attack= 4,
         health= 1,
@@ -149,7 +149,7 @@ base_stat_dict = {
         tribes= [],
         abilities= [Ability.REPULSIVE]
     ),
-    Creatures.MANTISGOD : BaseStats(
+    Creature.MANTISGOD : BaseStats(
         display_name= "Mantis God",
         attack= 1,
         health= 1,
@@ -158,7 +158,7 @@ base_stat_dict = {
         tribes= [Tribe.INSECT],
         abilities= [Ability.TRIFURCATED]
     ),
-    Creatures.AMOEBA : BaseStats(
+    Creature.AMOEBA : BaseStats(
         display_name= "Amoeba",
         attack= 1,
         health= 2,
@@ -167,7 +167,7 @@ base_stat_dict = {
         bone_cost= 2,
         abilities= [Ability.AMORPHOUS]
     ),
-    Creatures.STATIC_GLITCH : BaseStats(
+    Creature.STATIC_GLITCH : BaseStats(
         display_name= "Static Glitch",
         attack= 1,
         health= 1,
@@ -175,7 +175,7 @@ base_stat_dict = {
         blood_cost= 1,
         abilities= []
     ),
-    Creatures.PELTLICE : BaseStats(
+    Creature.PELTLICE : BaseStats(
         display_name= "Pelt Lice",
         attack= 1,
         health= 1,
@@ -184,7 +184,7 @@ base_stat_dict = {
         blood_cost= 4,
         abilities= [Ability.DOUBLE_STRIKE]
     ),
-    Creatures.CAT : BaseStats(
+    Creature.CAT : BaseStats(
         display_name= "Cat",
         attack= 0,
         health= 1,
@@ -192,7 +192,7 @@ base_stat_dict = {
         blood_cost= 1,
         abilities= [Ability.MANY_LIVES]
     ),
-    Creatures.URAYULI : BaseStats(
+    Creature.URAYULI : BaseStats(
         display_name= "Urayuli",
         attack= 7,
         health= 7,
@@ -201,7 +201,7 @@ base_stat_dict = {
         blood_cost= 4,
         abilities= []
     ),
-    Creatures.OUROBOROS : BaseStats(
+    Creature.OUROBOROS : BaseStats(
         display_name= "Ouroboros",
         attack= 1,
         health= 1,
@@ -210,14 +210,14 @@ base_stat_dict = {
         blood_cost= 2,
         abilities= [Ability.UNKILLABLE]
     ),
-    Creatures.SQUIRREL : BaseStats(
+    Creature.SQUIRREL : BaseStats(
         display_name= "Squirrel",
         attack= 0,
         health= 1,
         tribes= [Tribe.SQUIRREL],
         abilities= []
     ),
-    Creatures.WOLFCUB : BaseStats(
+    Creature.WOLFCUB : BaseStats(
         display_name= "Wolf Cub",
         attack= 1,
         health= 1,
@@ -225,7 +225,7 @@ base_stat_dict = {
         tribes= [Tribe.CANINE],
         abilities= [Ability.FLEDGLING]
     ),
-    Creatures.PORCUPINE : BaseStats(
+    Creature.PORCUPINE : BaseStats(
         display_name= "Porcupine",
         attack= 1,
         health= 2,
@@ -233,7 +233,7 @@ base_stat_dict = {
         tribes= [],
         abilities= [Ability.SHARP_QUILLS]
     ),
-    Creatures.COYOTE : BaseStats(
+    Creature.COYOTE : BaseStats(
         display_name= "Coyote",
         attack= 2,
         health= 1,
@@ -241,7 +241,7 @@ base_stat_dict = {
         tribes= [Tribe.CANINE],
         abilities= []
     ),
-    Creatures.STOAT : BaseStats(
+    Creature.STOAT : BaseStats(
         display_name= "Stoat",
         attack= 1,
         health= 2,
@@ -249,7 +249,7 @@ base_stat_dict = {
         tribes= [],
         abilities= []
     ),
-    Creatures.WOLF : BaseStats(
+    Creature.WOLF : BaseStats(
         display_name= "Wolf",
         attack= 3,
         health= 2,
@@ -257,7 +257,7 @@ base_stat_dict = {
         tribes= [Tribe.CANINE],
         abilities= []
     ),
-    Creatures.SKUNK : BaseStats(
+    Creature.SKUNK : BaseStats(
         display_name= "Skunk",
         attack= 0,
         health= 3,
@@ -265,7 +265,7 @@ base_stat_dict = {
         tribes= [],
         abilities= [Ability.STINKY]
     ),
-    Creatures.PRONGHORN : BaseStats(
+    Creature.PRONGHORN : BaseStats(
         display_name= "Pronghorn",
         attack= 1,
         health= 3,
@@ -273,7 +273,7 @@ base_stat_dict = {
         tribes= [Tribe.HOOVED],
         abilities= [Ability.SPRINTER, Ability.BIFURCATED]
     ),
-    Creatures.RINGWORM : BaseStats(
+    Creature.RINGWORM : BaseStats(
         display_name= "Ringworm",
         attack= 0,
         health= 1,
@@ -281,14 +281,14 @@ base_stat_dict = {
         tribes= [Tribe.INSECT],
         abilities= []
     ),
-    Creatures.TREE : BaseStats(
+    Creature.TREE : BaseStats(
         display_name= "Tree?",
         attack= 0,
         health= 4,
         tribes= [],
         abilities= []
     ),
-    Creatures.SPARROW : BaseStats(
+    Creature.SPARROW : BaseStats(
         display_name= "Sparrow",
         attack= 1,
         health= 2,
@@ -296,7 +296,7 @@ base_stat_dict = {
         tribes= [Tribe.AVIAN],
         abilities= [Ability.AIRBORN]
     ),
-    Creatures.BULLFROG : BaseStats(
+    Creature.BULLFROG : BaseStats(
         display_name= "Bullfrog",
         attack= 1,
         health= 2,
@@ -304,36 +304,36 @@ base_stat_dict = {
         tribes= [Tribe.REPTILE],
         abilities= [Ability.MIGHTY_LEAP]
     ),
-    Creatures.BOULDER : BaseStats(
+    Creature.BOULDER : BaseStats(
         display_name= "Boulder",
         attack= 1,
         health= 1,
         tribes= [],
         abilities= []
     ),
-    Creatures.SMOKE : BaseStats(
+    Creature.SMOKE : BaseStats(
         display_name= "The Smoke",
         attack= 0,
         health= 1,
         tribes= [],
         abilities= [Ability.BONE_KING]
     ),
-    Creatures.MULE : BaseStats(
+    Creature.MULE : BaseStats(
         display_name= "Pack Mule",
         attack= 0,
         health= 5,
         tribes= [],
         abilities= [Ability.SPRINTER]
     ),
-    Creatures.BEEHIVE : BaseStats(
+    Creature.BEEHIVE : BaseStats(
         display_name= "Beehive",
-        attack= 1,
-        health= 1,
+        attack= 0,
+        health= 2,
         blood_cost= 1,
         tribes= [Tribe.INSECT],
         abilities= [Ability.BEES_WITHIN]
     ),
-    Creatures.BEE : BaseStats(
+    Creature.BEE : BaseStats(
         display_name= "Bee",
         attack= 1,
         health= 1,
@@ -341,7 +341,7 @@ base_stat_dict = {
         tribes= [Tribe.INSECT],
         abilities= [Ability.AIRBORN]
     ),
-    Creatures.MANTIS : BaseStats(
+    Creature.MANTIS : BaseStats(
         display_name= "Mantis",
         attack= 1,
         health= 1,
@@ -349,14 +349,14 @@ base_stat_dict = {
         tribes= [Tribe.INSECT],
         abilities= [Ability.BIFURCATED]
     ),
-    Creatures.GOLDNUGGET : BaseStats(
+    Creature.GOLDNUGGET : BaseStats(
         display_name= "Nugget",
         attack= 1,
         health= 1,
         tribes= [],
         abilities= []
     ),
-    Creatures.BLOODHOUND : BaseStats(
+    Creature.BLOODHOUND : BaseStats(
         display_name= "Bloodhound",
         attack= 2,
         health= 3,
@@ -364,7 +364,7 @@ base_stat_dict = {
         tribes= [Tribe.CANINE],
         abilities= [Ability.GUARDIAN]
     ),
-    Creatures.VULTURE : BaseStats(
+    Creature.VULTURE : BaseStats(
         display_name= "Turkey Vulture",
         attack= 3,
         health= 3,
@@ -372,7 +372,7 @@ base_stat_dict = {
         tribes= [Tribe.AVIAN],
         abilities= [Ability.AIRBORN]
     ),
-    Creatures.RAVENEGG : BaseStats(
+    Creature.RAVENEGG : BaseStats(
         display_name= "Raven Egg",
         attack= 0,
         health= 2,
@@ -380,7 +380,7 @@ base_stat_dict = {
         tribes= [Tribe.AVIAN],
         abilities= [Ability.FLEDGLING]
     ),
-    Creatures.GECK : BaseStats(
+    Creature.GECK : BaseStats(
         display_name= "Geck",
         attack= 1,
         health= 1,
@@ -389,7 +389,7 @@ base_stat_dict = {
         tribes= [Tribe.REPTILE],
         abilities= []
     ),
-    Creatures.RAVEN : BaseStats(
+    Creature.RAVEN : BaseStats(
         display_name= "Raven",
         attack= 2,
         health= 3,
@@ -397,7 +397,7 @@ base_stat_dict = {
         tribes= [Tribe.AVIAN],
         abilities= [Ability.AIRBORN]
     ),
-    Creatures.MOLE : BaseStats(
+    Creature.MOLE : BaseStats(
         display_name= "Mole",
         attack= 0,
         health= 4,
@@ -405,7 +405,7 @@ base_stat_dict = {
         tribes= [],
         abilities= [Ability.BURROWER]
     ),
-    Creatures.COCKROACH : BaseStats(
+    Creature.COCKROACH : BaseStats(
         display_name= "Cockroach",
         attack= 1,
         health= 1,
@@ -413,7 +413,7 @@ base_stat_dict = {
         tribes= [Tribe.INSECT],
         abilities= [Ability.UNKILLABLE]
     ),
-    Creatures.ALPHA : BaseStats(
+    Creature.ALPHA : BaseStats(
         display_name= "Alpha",
         attack= 1,
         health= 2,
@@ -421,7 +421,7 @@ base_stat_dict = {
         bone_cost= 4,
         abilities= [Ability.LEADER]
     ),
-    Creatures.PACKRAT : BaseStats(
+    Creature.PACKRAT : BaseStats(
         display_name= "Pack Rat",
         attack= 2,
         health= 2,
@@ -430,7 +430,7 @@ base_stat_dict = {
         tribes= [],
         abilities= [Ability.TRINKET_BEARER]
     ),
-    Creatures.ANT : BaseStats(
+    Creature.ANT : BaseStats(
         display_name= "Worker Ant",
         attack= 1,
         health= 1,
@@ -438,7 +438,7 @@ base_stat_dict = {
         tribes= [Tribe.INSECT],
         abilities= []
     ),
-    Creatures.ANTQUEEN : BaseStats(
+    Creature.ANTQUEEN : BaseStats(
         display_name= "Ant Queen",
         attack= 1,
         health= 1,
@@ -446,7 +446,7 @@ base_stat_dict = {
         tribes= [Tribe.INSECT],
         abilities= [Ability.ANT_SPAWNER]
     ),
-    Creatures.SKINK : BaseStats(
+    Creature.SKINK : BaseStats(
         display_name= "Skink",
         attack= 1,
         health= 2,
@@ -454,7 +454,7 @@ base_stat_dict = {
         tribes= [Tribe.REPTILE],
         abilities= [Ability.LOOSE_TAIL]
     ),
-    Creatures.ADDER : BaseStats(
+    Creature.ADDER : BaseStats(
         display_name= "Adder",
         attack= 1,
         health= 1,
@@ -462,7 +462,7 @@ base_stat_dict = {
         tribes= [Tribe.REPTILE],
         abilities= [Ability.TOUCH_OF_DEATH]
     ),
-    Creatures.KINGFISHER : BaseStats(
+    Creature.KINGFISHER : BaseStats(
         display_name= "Kingfisher",
         attack= 1,
         health= 1,
@@ -470,21 +470,21 @@ base_stat_dict = {
         tribes= [Tribe.AVIAN],
         abilities= [Ability.WATERBORNE, Ability.AIRBORN]
     ),
-    Creatures.BAITBUCKET : BaseStats(
+    Creature.BAITBUCKET : BaseStats(
         display_name= "Bait Bucket",
         attack= 0,
         health= 1,
         tribes= [],
         abilities= []
     ),
-    Creatures.TREE_SNOWCOVERED : BaseStats(
+    Creature.TREE_SNOWCOVERED : BaseStats(
         display_name= "Snowy Tree?",
         attack= 0,
         health= 3,
         tribes= [],
         abilities= [Ability.MIGHTY_LEAP]
     ),
-    Creatures.ELKCUB : BaseStats(
+    Creature.ELKCUB : BaseStats(
         display_name= "Elk Fawn",
         attack= 1,
         health= 1,
@@ -492,7 +492,7 @@ base_stat_dict = {
         tribes= [Tribe.HOOVED],
         abilities= [Ability.SPRINTER, Ability.FLEDGLING]
     ),
-    Creatures.MAGGOTS : BaseStats(
+    Creature.MAGGOTS : BaseStats(
         display_name= "Corpse Maggots",
         attack= 1,
         health= 1,
@@ -500,7 +500,7 @@ base_stat_dict = {
         tribes= [Tribe.INSECT],
         abilities= [Ability.CORPSE_EATER]
     ),
-    Creatures.TRAPFROG : BaseStats(
+    Creature.TRAPFROG : BaseStats(
         display_name= "Strange Frog",
         attack= 1,
         health= 1,
@@ -508,14 +508,14 @@ base_stat_dict = {
         tribes= [],
         abilities= [Ability.MIGHTY_LEAP]
     ),
-    Creatures.TRAP : BaseStats(
+    Creature.TRAP : BaseStats(
         display_name= "Trap",
         attack= 1,
         health= 1,
         tribes= [],
         abilities= [Ability.MIGHTY_LEAP]
     ),
-    Creatures.SHARK : BaseStats(
+    Creature.SHARK : BaseStats(
         display_name= "Great White",
         attack= 4,
         health= 2,
@@ -523,7 +523,7 @@ base_stat_dict = {
         tribes= [],
         abilities= [Ability.WATERBORNE]
     ),
-    Creatures.MOLEMAN : BaseStats(
+    Creature.MOLEMAN : BaseStats(
         display_name= "Moleman",
         attack= 0,
         health= 6,
@@ -532,7 +532,7 @@ base_stat_dict = {
         tribes= [],
         abilities= [Ability.BURROWER, Ability.MIGHTY_LEAP]
     ),
-    Creatures.MOTHMAN : BaseStats(
+    Creature.MOTHMAN : BaseStats(
         display_name= "Strange Larva",
         attack= 0,
         health= 3,
@@ -541,7 +541,7 @@ base_stat_dict = {
         tribes= [Tribe.INSECT],
         abilities= [Ability.FLEDGLING]
     ),
-    Creatures.AMALGAM : BaseStats(
+    Creature.AMALGAM : BaseStats(
         display_name= "Amalgam",
         attack= 3,
         health= 3,
@@ -550,35 +550,35 @@ base_stat_dict = {
         blood_cost= 2,
         abilities= []
     ),
-    Creatures.STUMP : BaseStats(
+    Creature.STUMP : BaseStats(
         display_name= "Stump",
         attack= 1,
         health= 1,
         tribes= [],
         abilities= []
     ),
-    Creatures.GIANTCARD_MOON : BaseStats(
+    Creature.GIANTCARD_MOON : BaseStats(
         display_name= "The Moon",
         attack= 1,
         health= 1,
         tribes= [],
         abilities= []
     ),
-    Creatures.TAIL_INSECT : BaseStats(
+    Creature.TAIL_INSECT : BaseStats(
         display_name= "Insect Tail",
         attack= 1,
         health= 1,
         tribes= [],
         abilities= []
     ),
-    Creatures.PELTHARE : BaseStats(
+    Creature.PELTHARE : BaseStats(
         display_name= "Rabbit Pelt",
         attack= 0,
         health= 1,
         tribes= [],
         abilities= []
     ),
-    Creatures.MOOSE : BaseStats(
+    Creature.MOOSE : BaseStats(
         display_name= "Moose Buck",
         attack= 3,
         health= 7,
@@ -586,14 +586,14 @@ base_stat_dict = {
         tribes= [Tribe.HOOVED],
         abilities= [Ability.HEAFTY]
     ),
-    Creatures.RABBIT : BaseStats(
+    Creature.RABBIT : BaseStats(
         display_name= "Rabbit",
         attack= 0,
         health= 1,
         tribes= [],
         abilities= []
     ),
-    Creatures.RATTLER : BaseStats(
+    Creature.RATTLER : BaseStats(
         display_name= "Rattler",
         attack= 3,
         health= 1,
@@ -601,7 +601,7 @@ base_stat_dict = {
         tribes= [Tribe.REPTILE],
         abilities= []
     ),
-    Creatures.SNAPPER : BaseStats(
+    Creature.SNAPPER : BaseStats(
         display_name= "River Snapper",
         attack= 1,
         health= 6,
@@ -609,7 +609,7 @@ base_stat_dict = {
         tribes= [Tribe.REPTILE],
         abilities= []
     ),
-    Creatures.SQUIDBELL : BaseStats(
+    Creature.SQUIDBELL : BaseStats(
         display_name= "Squid (Bell)",
         attack= 1,
         health= 3,
@@ -617,14 +617,14 @@ base_stat_dict = {
         tribes= [],
         abilities= []
     ),
-    Creatures.DEFAULTTAIL : BaseStats(
+    Creature.DEFAULTTAIL : BaseStats(
         display_name= "Tail",
         attack= 1,
         health= 1,
         tribes= [],
         abilities= []
     ),
-    Creatures.LONG_ELK : BaseStats(
+    Creature.LONG_ELK : BaseStats(
         display_name= "Long Elk",
         attack= 1,
         health= 2,
@@ -633,7 +633,7 @@ base_stat_dict = {
         tribes= [Tribe.HOOVED],
         abilities= [Ability.SPRINTER, Ability.TOUCH_OF_DEATH]
     ),
-    Creatures.GOAT : BaseStats(
+    Creature.GOAT : BaseStats(
         display_name= "Black Goat",
         attack= 0,
         health= 1,
@@ -641,7 +641,7 @@ base_stat_dict = {
         tribes= [Tribe.HOOVED],
         abilities= [Ability.WORTHY_SACRIFICE]
     ),
-    Creatures.ELK : BaseStats(
+    Creature.ELK : BaseStats(
         display_name= "Elk",
         attack= 2,
         health= 4,
@@ -649,7 +649,7 @@ base_stat_dict = {
         tribes= [Tribe.HOOVED],
         abilities= [Ability.SPRINTER]
     ),
-    Creatures.BULL : BaseStats(
+    Creature.BULL : BaseStats(
         display_name= "Wild Bull",
         attack= 3,
         health= 2,
@@ -657,7 +657,7 @@ base_stat_dict = {
         tribes= [Tribe.HOOVED],
         abilities= [Ability.RAMPAGER]
     ),
-    Creatures.BAT : BaseStats(
+    Creature.BAT : BaseStats(
         display_name= "Bat",
         attack= 2,
         health= 1,
@@ -665,7 +665,7 @@ base_stat_dict = {
         tribes= [],
         abilities= [Ability.AIRBORN]
     ),
-    Creatures.GRIZZLY : BaseStats(
+    Creature.GRIZZLY : BaseStats(
         display_name= "Grizzly",
         attack= 4,
         health= 6,
@@ -673,7 +673,7 @@ base_stat_dict = {
         tribes= [],
         abilities= []
     ),
-    Creatures.ANTFLYING : BaseStats(
+    Creature.ANTFLYING : BaseStats(
         display_name= "Flying Ant",
         attack= 1,
         health= 1,
@@ -681,7 +681,7 @@ base_stat_dict = {
         tribes= [Tribe.INSECT],
         abilities= [Ability.AIRBORN]
     ),
-    Creatures.PELTGOLDEN : BaseStats(
+    Creature.PELTGOLDEN : BaseStats(
         display_name= "Golden Pelt",
         attack= 0,
         health= 3,
@@ -689,14 +689,14 @@ base_stat_dict = {
         tribes= [],
         abilities= []
     ),
-    Creatures.FROZENOPOSSUM : BaseStats(
+    Creature.FROZENOPOSSUM : BaseStats(
         display_name= "Frozen Opossum",
         attack= 1,
         health= 1,
         tribes= [],
         abilities= [Ability.FROZEN_AWAY]
     ),
-    Creatures.OPOSSUM : BaseStats(
+    Creature.OPOSSUM : BaseStats(
         display_name= "Opossum",
         attack= 1,
         health= 1,
@@ -704,14 +704,14 @@ base_stat_dict = {
         tribes= [],
         abilities= []
     ),
-    Creatures.PELTWOLF : BaseStats(
+    Creature.PELTWOLF : BaseStats(
         display_name= "Wolf Pelt",
         attack= 0,
         health= 2,
         tribes= [],
         abilities= []
     ),
-    Creatures.SQUIDCARDS : BaseStats(
+    Creature.SQUIDCARDS : BaseStats(
         display_name= "Squid (Cards)",
         attack= 1,
         health= 1,
@@ -719,14 +719,14 @@ base_stat_dict = {
         tribes= [],
         abilities= []
     ),
-    Creatures.DAM : BaseStats(
+    Creature.DAM : BaseStats(
         display_name= "Dam",
         attack= 1,
         health= 1,
         tribes= [],
         abilities= []
     ),
-    Creatures.MUDTURTLE : BaseStats(
+    Creature.MUDTURTLE : BaseStats(
         display_name= "Mud Turtle",
         attack= 2,
         health= 2,
@@ -734,7 +734,7 @@ base_stat_dict = {
         tribes= [Tribe.REPTILE],
         abilities= [Ability.ARMORED]
     ),
-    Creatures.RATKING : BaseStats(
+    Creature.RATKING : BaseStats(
         display_name= "Rat King",
         attack= 2,
         health= 1,
@@ -742,7 +742,7 @@ base_stat_dict = {
         tribes= [],
         abilities= [Ability.BONE_KING]
     ),
-    Creatures.OTTER : BaseStats(
+    Creature.OTTER : BaseStats(
         display_name= "River Otter",
         attack= 1,
         health= 1,
@@ -750,7 +750,7 @@ base_stat_dict = {
         tribes= [],
         abilities= [Ability.WATERBORNE]
     ),
-    Creatures.FIELDMOUSE : BaseStats(
+    Creature.FIELDMOUSE : BaseStats(
         display_name= "Field Mice",
         attack= 2,
         health= 2,
@@ -758,14 +758,14 @@ base_stat_dict = {
         tribes= [],
         abilities= [Ability.FECUNDITY]
     ),
-    Creatures.TAIL_BIRD : BaseStats(
+    Creature.TAIL_BIRD : BaseStats(
         display_name= "Bird Tail",
         attack= 1,
         health= 1,
         tribes= [],
         abilities= []
     ),
-    Creatures.JERSEYDEVIL : BaseStats(
+    Creature.JERSEYDEVIL : BaseStats(
         display_name= "Child 13",
         attack= 1,
         health= 1,
@@ -774,7 +774,7 @@ base_stat_dict = {
         tribes= [Tribe.HOOVED],
         abilities= [Ability.MANY_LIVES]
     ),
-    Creatures.DAUS : BaseStats(
+    Creature.DAUS : BaseStats(
         display_name= "The Daus",
         attack= 2,
         health= 2,
@@ -783,21 +783,21 @@ base_stat_dict = {
         tribes= [Tribe.HOOVED],
         abilities= [Ability.BELLIST]
     ),
-    Creatures.DAUSBELL : BaseStats(
+    Creature.DAUSBELL : BaseStats(
         display_name= "Chime",
         attack= 0,
         health= 1,
         tribes= [],
         abilities= []
     ),
-    Creatures.TAIL_FURRY : BaseStats(
+    Creature.TAIL_FURRY : BaseStats(
         display_name= "Furry Tail",
         attack= 1,
         health= 1,
         tribes= [],
         abilities= []
     ),
-    Creatures.SQUIDMIRROR : BaseStats(
+    Creature.SQUIDMIRROR : BaseStats(
         display_name= "Squid (Mirro)",
         attack= 1,
         health= 3,
@@ -805,7 +805,7 @@ base_stat_dict = {
         tribes= [],
         abilities= []
     ),
-    Creatures.DIREWOLF : BaseStats(
+    Creature.DIREWOLF : BaseStats(
         display_name= "Dire Wolf",
         attack= 2,
         health= 5,
@@ -813,7 +813,7 @@ base_stat_dict = {
         tribes= [Tribe.CANINE],
         abilities= [Ability.DOUBLE_STRIKE]
     ),
-    Creatures.MEALWORM : BaseStats(
+    Creature.MEALWORM : BaseStats(
         display_name= "Mealworm",
         attack= 0,
         health= 2,
@@ -821,7 +821,7 @@ base_stat_dict = {
         tribes= [Tribe.INSECT],
         abilities= [Ability.MORSEL]
     ),
-    Creatures.KRAKEN : BaseStats(
+    Creature.KRAKEN : BaseStats(
         display_name= "Great Kraken",
         attack= 1,
         health= 1,
@@ -830,7 +830,7 @@ base_stat_dict = {
         tribes= [],
         abilities= [Ability.WATERBORNE_TENTACLE]
     ),
-    Creatures.RACCOON : BaseStats(
+    Creature.RACCOON : BaseStats(
         display_name= "Raccoon",
         attack= 1,
         health= 1,
@@ -838,7 +838,7 @@ base_stat_dict = {
         tribes= [],
         abilities= [Ability.SCAVENGER]
     ),
-    Creatures.DIREWOLFPUP : BaseStats(
+    Creature.DIREWOLFPUP : BaseStats(
         display_name= "Dire Wolf Pup",
         attack= 1,
         health= 1,
@@ -846,7 +846,7 @@ base_stat_dict = {
         tribes= [Tribe.CANINE],
         abilities= [Ability.BONE_DIGGER, Ability.FLEDGLING]
     ),
-    Creatures.WOLVERINE : BaseStats(
+    Creature.WOLVERINE : BaseStats(
         display_name= "Wolverine",
         attack= 1,
         health= 3,
@@ -854,7 +854,7 @@ base_stat_dict = {
         tribes= [],
         abilities= []
     ),
-    Creatures.LAMMERGEIER : BaseStats(
+    Creature.LAMMERGEIER : BaseStats(
         display_name= "Lammergeier",
         attack= 1,
         health= 4,
@@ -862,7 +862,7 @@ base_stat_dict = {
         tribes= [Tribe.AVIAN],
         abilities= [Ability.AIRBORN]
     ),
-    Creatures.MAGPIE : BaseStats(
+    Creature.MAGPIE : BaseStats(
         display_name= "Magpie",
         attack= 1,
         health= 1,
@@ -870,7 +870,7 @@ base_stat_dict = {
         tribes= [Tribe.AVIAN],
         abilities= [Ability.HOARDER, Ability.AIRBORN]
     ),
-    Creatures.REDHART : BaseStats(
+    Creature.REDHART : BaseStats(
         display_name= "Redhart",
         attack= 1,
         health= 1,
@@ -878,7 +878,7 @@ base_stat_dict = {
         tribes= [Tribe.HOOVED],
         abilities= [Ability.SPRINTER]
     ),
-    Creatures.TADPOLE : BaseStats(
+    Creature.TADPOLE : BaseStats(
         display_name= "Tadpole",
         attack= 0,
         health= 1,
@@ -886,21 +886,21 @@ base_stat_dict = {
         tribes= [Tribe.REPTILE],
         abilities= [Ability.WATERBORNE, Ability.FLEDGLING]
     ),
-    Creatures.SKINKTAIL : BaseStats(
+    Creature.SKINKTAIL : BaseStats(
         display_name= "Skink Tail",
         attack= 1,
         health= 1,
         tribes= [],
         abilities= []
     ),
-    Creatures.AQUASQUIRREL : BaseStats(
+    Creature.AQUASQUIRREL : BaseStats(
         display_name= "Aqua Squirrel",
         attack= 1,
         health= 1,
         tribes= [Tribe.SQUIRREL],
         abilities= []
     ),
-    Creatures.HYDRAEGG : BaseStats(
+    Creature.HYDRAEGG : BaseStats(
         display_name= "Hydra Egg",
         attack= 1,
         health= 1,
@@ -909,14 +909,14 @@ base_stat_dict = {
         tribes= [],
         abilities= []
     ),
-    Creatures.STARVATION : BaseStats(
+    Creature.STARVATION : BaseStats(
         display_name= "Starvation",
         attack= 1,
         health= 1,
         tribes= [],
         abilities= []
     ),
-    Creatures.CUCKOO : BaseStats(
+    Creature.CUCKOO : BaseStats(
         display_name= "Cuckoo",
         attack= 1,
         health= 1,
@@ -924,14 +924,14 @@ base_stat_dict = {
         tribes= [Tribe.AVIAN],
         abilities= [Ability.BROODPARASITE]
     ),
-    Creatures.SNELK_NECK : BaseStats(
+    Creature.SNELK_NECK : BaseStats(
         display_name= "Vertebrae",
         attack= 0,
         health= 1,
         tribes= [],
         abilities= []
     ),
-    Creatures.MOLESEAMAN : BaseStats(
+    Creature.MOLESEAMAN : BaseStats(
         display_name= "Mole Seaman",
         attack= 1,
         health= 8,
@@ -940,21 +940,21 @@ base_stat_dict = {
         tribes= [],
         abilities= [Ability.BURROWER, Ability.MIGHTY_LEAP]
     ),
-    Creatures.GIANTCARD_SHIP : BaseStats(
+    Creature.GIANTCARD_SHIP : BaseStats(
         display_name= "The Limonchello",
         attack= 1,
         health= 1,
         tribes= [],
         abilities= []
     ),
-    Creatures.SKELETONPIRATE : BaseStats(
+    Creature.SKELETONPIRATE : BaseStats(
         display_name= "Skeleton Pirate",
         attack= 1,
         health= 1,
         tribes= [],
         abilities= []
     ),
-    Creatures.WARREN : BaseStats(
+    Creature.WARREN : BaseStats(
         display_name= "Warren",
         attack= 0,
         health= 2,
@@ -962,7 +962,7 @@ base_stat_dict = {
         tribes= [],
         abilities= [Ability.RABBIT_HOLE]
     ),
-    Creatures.HODAG : BaseStats(
+    Creature.HODAG : BaseStats(
         display_name= "Hodag",
         attack= 1,
         health= 5,
@@ -971,7 +971,7 @@ base_stat_dict = {
         tribes= [],
         abilities= []
     ),
-    Creatures.BEAVER : BaseStats(
+    Creature.BEAVER : BaseStats(
         display_name= "Beaver",
         attack= 1,
         health= 3,

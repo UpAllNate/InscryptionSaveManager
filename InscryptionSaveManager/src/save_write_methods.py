@@ -175,11 +175,13 @@ def generate_card_mod_block(
 
     ret_str = """                        {
                             "$k": """
-    ret_str += f'"{card.name}"'
+    ret_str += f'"{card.creature.value}'
 
     if card_instance > 0:
-        ret_str += f'#{card_instance}'
-    
+        ret_str += f'#{card_instance}"'
+    else:
+        ret_str += '"'
+
     ret_str += ',\n'
 
     ret_str += """                            "$v": {
@@ -243,9 +245,9 @@ def write_save_file(save_file_path : str, cards : list[Card], logger : ProjectLo
                 
                 for i, card in enumerate(cards):
                     if i < len(cards) - 1:
-                        write_lines.append(f'                        "{card.name}",\n')
+                        write_lines.append(f'                        "{card.creature.value}",\n')
                     else:
-                        write_lines.append(f'                        "{card.name}"\n')
+                        write_lines.append(f'                        "{card.creature.value}"\n')
             
             if current_run_init and line.startswith('                    ]'):
                 overwriting = False
@@ -262,12 +264,12 @@ def write_save_file(save_file_path : str, cards : list[Card], logger : ProjectLo
 
                 instance_dict = {}
                 for i, card in enumerate(cards):
-                    if card.name not in instance_dict:
-                        instance_dict[card.name] = 0
+                    if card.creature.value not in instance_dict:
+                        instance_dict[card.creature.value] = 0
                     else:
-                        instance_dict[card.name] += 1
+                        instance_dict[card.creature.value] += 1
 
-                    ret_str, id = generate_card_mod_block(card, card_instance= instance_dict[card.name], id= id)
+                    ret_str, id = generate_card_mod_block(card, card_instance= instance_dict[card.creature.value], id= id)
 
                     if i < len(cards) - 1:
                         write_lines.append(ret_str + ",\n")

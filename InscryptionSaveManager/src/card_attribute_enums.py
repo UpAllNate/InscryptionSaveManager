@@ -1,5 +1,8 @@
 from enum import Enum, auto as enum_auto
 
+class TotemTop(Enum):
+    REPTILE = 5
+
 class Tribe(Enum):
     REPTILE = enum_auto()
     INSECT = enum_auto()
