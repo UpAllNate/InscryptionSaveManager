@@ -12,5 +12,5 @@ def save_file_changed(save_file_path : str, logger : ProjectLogger) -> bool:
         time_diff_seconds = abs(current_modified - last_modified)
         last_modified = current_modified
         logger.log(INFO, f"{'#' * 20} File save detected")
-        return time_diff_seconds > 5
+        return time_diff_seconds > 10
     return False

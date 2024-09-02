@@ -40,7 +40,15 @@ class CardModConfig:
     decal_ids : list[Decal] = field(default_factory= list)
 
     def __str__(self) -> str:
-        return f"Attk: {'+' if self.attack_adjustment > 0 else ''}{self.attack_adjustment}, Health: {'+' if self.health_adjustment > 0 else ''}{self.health_adjustment}"
+        ret_str = f"Attk: {'+' if self.attack_adjustment > 0 else ''}{self.attack_adjustment}, Health: {'+' if self.health_adjustment > 0 else ''}{self.health_adjustment}, Abilities: "
+        
+        if self.abilities:
+            for a in self.abilities:
+                ret_str += f"{a.name}, "
+            ret_str = ret_str[:-2]
+        else:
+            ret_str += "None"
+        return ret_str
 
 class Card:
 
@@ -103,12 +111,11 @@ class Card:
             msg = msg[:-1]
         else:
             msg += " None"
-        
-        # if ENABLE_MOD_CONFIGS_CARD_LOGGING:
-        #     if self.mod_configs:
-        #         msg+= "\n"
-        #         for mc in self.mod_configs:
-        #             msg += f"\t{str(mc)}\n"
-        #         msg = msg[:-1]
+
+        if self.mod_configs:
+            msg+= "\n"
+            for mc in self.mod_configs:
+                msg += f"\t{str(mc)}\n"
+            msg = msg[:-1]
 
         return msg
