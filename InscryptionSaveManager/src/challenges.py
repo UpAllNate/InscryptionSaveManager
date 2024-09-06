@@ -130,15 +130,6 @@ class Challenge_BeeSwarm(Challenge):
         
         return True
 
-tribe_prompt_dict = {
-    "avian" : Tribe.AVIAN,
-    "reptile" : Tribe.REPTILE,
-    "insect" : Tribe.INSECT,
-    "avian" : Tribe.AVIAN,
-    "canine" : Tribe.CANINE,
-    "hooved" : Tribe.HOOVED
-}
-
 class Challenge_StartWithEveryCard(Challenge):
 
     def __init__(self, meta_logger: ProjectLogger, ui_logger: ProjectLogger) -> None:
