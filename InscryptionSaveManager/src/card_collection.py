@@ -7,7 +7,6 @@ standard_cards = [
     Creature.URAYULI,
     Creature.OUROBOROS,
     Creature.MANTISGOD,
-    Creature.SQUIRREL,
     Creature.WOLFCUB,
     Creature.PORCUPINE,
     Creature.COYOTE,

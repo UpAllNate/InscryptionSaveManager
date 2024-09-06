@@ -159,14 +159,16 @@ class ProjectLogger:
         self.stream_logger.log(level, message, stacklevel=2)
         self.file_logger.log(level, file_text, stacklevel=2)
 
-logger = ProjectLogger(
-    file_logger_name= __name__ + "__FILE__", file_log_level= INFO,
-    file_log_format_string= standard_file_format_string,
-    file_filename= __name__ + ".log", file_max_size= 10 * 1024 * 1024, file_backup_count= 0,
-    stream_logger_name= __name__ + "__STREAM__", stream_log_level= INFO, stream_log_format_string= standard_stream_format_string
-)
 
 if __name__ == "__main__":
+
+    logger = ProjectLogger(
+        file_logger_name= __name__ + "__FILE__", file_log_level= INFO,
+        file_log_format_string= standard_file_format_string,
+        file_filename= __name__ + ".log", file_max_size= 10 * 1024 * 1024, file_backup_count= 0,
+        stream_logger_name= __name__ + "__STREAM__", stream_log_level= INFO, stream_log_format_string= standard_stream_format_string
+    )
+
 
     if "\\" in __file__:
         name = __file__.split("\\")[-1]

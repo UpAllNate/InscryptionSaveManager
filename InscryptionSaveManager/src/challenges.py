@@ -139,6 +139,40 @@ tribe_prompt_dict = {
     "hooved" : Tribe.HOOVED
 }
 
+class Challenge_StartWithEveryCard(Challenge):
+
+    def __init__(self, meta_logger: ProjectLogger, ui_logger: ProjectLogger) -> None:
+        super().__init__(meta_logger, ui_logger)
+
+    def startup_query(self) -> None:
+        return super().startup_query()
+    
+    def run(self, cards: list[Card]) -> bool:
+        super().run(cards)
+
+        if len(cards) < 10:
+            self.ui_logger.log(level= INFO, message= "Let's load you up with every single card, pal.")
+            while cards:
+                cards.pop(0)
+
+            for card in [Card(creature= creature) for creature in standard_cards]:
+                cards.append(card)
+
+            self.meta_logger.log(level= INFO, message= f"{'#' * 20} List of all cards:")
+            for card in cards:
+                self.meta_logger.log(INFO, message= str(card))
+            
+            return True
+
+tribe_prompt_dict = {
+    "avian" : Tribe.AVIAN,
+    "reptile" : Tribe.REPTILE,
+    "insect" : Tribe.INSECT,
+    "avian" : Tribe.AVIAN,
+    "canine" : Tribe.CANINE,
+    "hooved" : Tribe.HOOVED
+}
+
 class Challenge_EnforceTribe(Challenge):
 
     def __init__(self, tribe: Tribe, meta_logger: ProjectLogger, ui_logger: ProjectLogger) -> None:

@@ -43,7 +43,8 @@ from challenges import (
     ChallengeManager,
     Challenge_Sigil_Adder,
     Challenge_BeeSwarm,
-    Challenge_EnforceTribe
+    Challenge_EnforceTribe,
+    Challenge_StartWithEveryCard
 )
 
 with open('filepath.txt', 'r') as f:
@@ -51,14 +52,9 @@ with open('filepath.txt', 'r') as f:
         if "inscryption" in line.lower():
             save_file_path = line.strip()
 
-challenges = [
-    
-]
-
 challenge_manager = ChallengeManager(
     challenges= [
-        Challenge_EnforceTribe(
-            tribe= Tribe.REPTILE,
+        Challenge_StartWithEveryCard(
             meta_logger= meta_logger,
             ui_logger= ui_logger
         )
@@ -79,6 +75,7 @@ while True:
 
         write_necessary = challenge_manager.run(cards)
         meta_logger.log(level= INFO, message= f"Write necessary: {write_necessary}")
+        ui_logger.log(level= INFO, message= f"Write necessary: {write_necessary}")
         # write_necessary = True
         handle_save_write(cards, save_file_path, write_necessary, meta_logger)
 
