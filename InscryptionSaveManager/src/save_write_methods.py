@@ -27,7 +27,7 @@ def generate_mod_card_info(
                                         "nameReplacement": """
     
     # Name Replacement
-    ret_str += config.replacement_name
+    ret_str += f'"{config.replacement_name}"'
     ret_str += ',\n'
 
     # Stat Adjustment

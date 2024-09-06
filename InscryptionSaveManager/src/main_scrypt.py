@@ -44,7 +44,8 @@ from challenges import (
     Challenge_Sigil_Adder,
     Challenge_BeeSwarm,
     Challenge_EnforceTribe,
-    Challenge_StartWithEveryCard
+    Challenge_StartWithEveryCard,
+    DoctorRenamer
 )
 
 with open('filepath.txt', 'r') as f:
@@ -54,7 +55,7 @@ with open('filepath.txt', 'r') as f:
 
 challenge_manager = ChallengeManager(
     challenges= [
-        Challenge_StartWithEveryCard(
+        DoctorRenamer(
             meta_logger= meta_logger,
             ui_logger= ui_logger
         )

@@ -85,6 +85,51 @@ class Challenge:
         if not self.initialized:
             self.startup_query()
 
+class DoctorRenamer(Challenge):
+
+    def __init__(self, meta_logger: ProjectLogger, ui_logger: ProjectLogger) -> None:
+        super().__init__(meta_logger, ui_logger)
+    
+    def startup_query(self) -> None:
+        return super().startup_query()
+    
+    def run(self, cards: list[Card]) -> bool:
+        super().run(cards)
+
+        write_necessary = False
+
+        # Iterate through all cards
+        for card in cards:
+            
+            # Check to see if this card needs to have 'Doctor' added to its name
+            this_card_doctor_named = False
+
+            # Look through each parsed mod config object
+            for mod_config in card.mod_configs:
+
+                # Check if there's a mod config that already names this card 'Doctor '
+                if mod_config.replacement_name.startswith("Doctor"):
+                    this_card_doctor_named = True
+
+            # Uh oh! This card isn't named doctor.
+            # We'll create a new mod config for that.
+            if not this_card_doctor_named:
+
+                self.meta_logger.log(level= INFO, message= f"Card {card.creature.name} is missing 'Doctor'!")
+
+                write_necessary = True # The whole deck will need to be written
+
+                new_mod_config = CardModConfig()
+                new_mod_config.replacement_name = "Doctor " + card.base_stats.display_name
+
+                # Add that mod config to the card
+                card.add_mod_config(new_mod_config)
+        
+        return write_necessary
+
+
+
+
 class ChallengeManager:
 
     def __init__(self, challenges: list[Challenge]) -> None:
@@ -93,6 +138,7 @@ class ChallengeManager:
     def run(self, cards : list[Card]) -> bool:
         if True in [challenge.run(cards) for challenge in self.challenges]:
             return True
+        return False
 
 class Challenge_Sigil_Adder(Challenge):
 
